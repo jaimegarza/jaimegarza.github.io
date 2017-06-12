@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <!-- Downloaded as per http://knsv.github.io/mermaid/#installation -->
+  <!-- Stored in the same directory as html file                     -->
+  <link rel="stylesheet" href="mermaid.forest.css">
+
+  <!-- Optional to use fontawesome                                   -->
+  <!-- Downloaded as per http://fontawesome.io/get-started/          -->
+  <!-- Stored in the same directory as html file                     -->
+  <script src="https://use.fontawesome.com/7065416dc9.js"></script>
+
+</head>
+<body>
+
+  <!-- Include mermaid on your web page:                             -->
+  <script src="mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad:true});</script>
+
+  <div class="mermaid">
+%% Inbound
+sequenceDiagram
+    participant Programs
+    participant ListMerge
+    participant Orchestration
+    participant AMS
+    participant App
+    activate Orchestration
+    activate App
+    loop as many pages as necessary
+        App->>Orchestration: data (JSON)
+        Orchestration->>AMS: Get fields, config, etc.
+        activate AMS
+        AMS-->>Orchestration: config
+        deactivate AMS
+        Orchestration->>ListMerge: Add to temp table
+        activate ListMerge
+        ListMerge-->>Orchestration: OK
+        deactivate ListMerge
+        Orchestration-->>App: OK
+    end
+    deactivate App
+    Orchestration->>ListMerge: Import temp table
+    deactivate Orchestration
+    activate ListMerge
+    ListMerge--xPrograms:AppCloud Evt Msg (ETV, advance)
+    deactivate ListMerge
+    activate Programs
+    Programs->>Programs: Import ETVs
+    Programs->>Programs: Advance Workflow if requested
+    deactivate Programs
+  </div>
+
+</body>
+</html>
