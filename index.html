@@ -2,6 +2,19 @@
 layout: default
 ---
 
+<div class="cycle-slideshow"
+    data-cycle-caption-plugin="caption2">
+    <div class="cycle-pager"></div>
+    <div class="cycle-prev"></div>
+    <div class="cycle-next"></div>
+    <div class="cycle-overlay"></div>
+
+    <img src="{{ site.baseurl }}/images/home_slider/working-hard.png" data-cycle-desc="Discover a little about me in this short bio." />
+    <img src="{{ site.baseurl }}/images/home_slider/syntax.png" data-cycle-desc="A powerful compiler generator for java, pascal and C" />
+    <img src="{{ site.baseurl }}/images/home_slider/reborn-tree.png" data-cycle-desc="Un ensayo sobre reiniciar la vida en un nuevo país. Picture used under the creative commons license." />
+    <img src="{{ site.baseurl }}/images/home_slider/honeymoon.png" data-cycle-desc="Our honeymoon in Mexico City and Cancun!" />
+</div>
+
 <div class="posts">
   {% for post in site.posts %}
     <article class="post">
