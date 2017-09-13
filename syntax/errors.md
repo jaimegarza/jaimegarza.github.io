@@ -13,6 +13,8 @@ layout: page
 ---
 
 * <a href="#errors-tokens">Error Tokens</a>
+* <a href="#errors-csample">Errors: C Example</a>
+* <a href="#errors-pascalsample">Errors: Pascal Example</a>
 
 ##### <a name="errors-tokens">Error Tokens</a>
 
@@ -393,6 +395,293 @@ What syntax does with statement-error is find that &#42;&#42; token and raise an
 
 Please note that you could also add code to such error rule. These can be used to free and undo code generated, symbol table entries, etc.
 
+##### <a name="errors-csample">Errors: C Sample</a>
 
+This is the example in C
+
+```
+%{
+#include <stdio.h>
+#include <string.h>
+#include "$$b.h"
+%}
+
+%lexer = {
+
+  char temp_c;
+
+  while ($c <= ' ' && $c > '\0') {
+    $+;
+  }
+}
+
+%token '{'     : "opening curly brace"
+%token '}'     : "closing curly brace"
+%token ';'     : "semicolon"
+%token '('     : "opening parenthesis"
+%token ')'     : "closing parenthesis"
+
+%left '+'      : "addition"
+    , '-'      : "subtraction"
+%left '*'      : "multiplication"
+    , '/'      : "division"
+%left unary
+
+%token eq      : "==" /==/ = return eq;
+%token ne      : "!=" /!=/ = return ne;
+
+%token _if     : "if" /if/ = return _if;
+%token _while  : "while" /while/ = return _while;
+
+%token <n> num : "number" /[0-9]*/ = {
+  return num;
+}
+
+%lexer = {
+  if (strchr("{};()+-*/", $c) != NULL) {
+    temp_c = $c;
+    $+;
+    return temp_c;
+  }
+}
+
+%name Block          : "a block"
+%name StatementList  : "a statement list"
+%name Statement      : "a statement"
+%name IfStatement    : "an if statement"
+%name WhileStatement : "a while loop"
+%name Condition      : "a condition"
+%name Expression     : "an expression"
+
+%error statement-error : "Statement error ($m)"
+%error condition-error : "Malformed condition ($m)"
+
+%start Block
+
+%%
+
+Block         : '{' StatementList '}'
+              ;
+
+StatementList : StatementList Statement
+              | 
+              ;
+
+Statement     : IfStatement
+              | WhileStatement
+              | Expression ';'
+              | statement-error ';'
+              ;
+
+IfStatement   : _if Condition Block
+              ;
+
+WhileStatement: _while Condition Block
+              ;
+
+Condition     : '(' Expression eq Expression ')'
+              | '(' Expression ne Expression ')'
+              | '(' condition-error ')'
+              ;
+
+Expression    : Expression '+' Expression
+              | Expression '-' Expression
+              | Expression '*' Expression
+              | Expression '/' Expression
+              | '-' Expression %prec unary
+              | '(' Expression ')'
+              | num
+              ;
+
+%%
+
+int charNum = 0;
+
+char * program = 
+  "{\n"
+  "  if (2==3) {\n"
+  "    (1 + 3) **4 / 5 + 20;\n"
+  "    22 + -3;\n"
+  "  }\n"
+  "  while (2 * 3) {\n"
+  "    2*2;\n"
+  "  }\n"
+  "}\n";
+
+char StxNextChar()
+{
+    if (charNum < strlen(program)) {
+      return program[charNum++];
+    }
+    return EOS;
+}
+
+void StxUngetChar(char c) {
+    charNum --;
+}
+
+int StxError(int state, int token, int top, char * message)
+{
+    printf("error near %s: %s\n", StxGetTokenName(token), message);
+#ifdef DEBUG
+    StxPrintStack();
+#endif
+    return ERROR_RE_ATTEMPT;
+}
+
+ 
+int main(int argc, char * argv[]) {
+    StxParse();
+}
+```
+
+##### <a name="errors-pascalsample">Errors: Pascal Sample</a>
+
+This is the example in Pascal
+
+```
+%{
+{Program that gets compiled and executed by free pascal}
+PROGRAM pascaltest;
+USES sysutils;
+{$I $$b.inc}
+
+VAR
+  temp_c : CHAR;
+%}
+
+%lexer =
+  while ($c <= ' ') AND ($c > CHR(0))  DO $+;
+%
+
+%token '{'     : "opening curly brace"
+%token '}'     : "closing curly brace"
+%token ';'     : "semicolon"
+%token '('     : "opening parenthesis"
+%token ')'     : "closing parenthesis"
+
+%left '+'      : "addition"
+    , '-'      : "subtraction"
+%left '*'      : "multiplication"
+    , '/'      : "division"
+%left unary
+
+%token eq      : "==" /==/ = $x(eq);%
+%token ne      : "!=" /!=/ = $x(ne);%
+
+%token _if     : "if" /if/ = $x(_if);%
+%token _while  : "while" /while/ = $x(_while);%
+
+%token <n> num : "number" /[0-9]*/ =
+  $x(num);
+%
+
+%lexer =
+  IF   POS($c, '{};()+-*/') > 0
+  THEN BEGIN
+       temp_c := $c;
+        $+;
+        $x(ORD(temp_c));
+  END;
+%
+
+%name Block          : "a block"
+%name StatementList  : "a statement list"
+%name Statement      : "a statement"
+%name IfStatement    : "an if statement"
+%name WhileStatement : "a while loop"
+%name Condition      : "a condition"
+%name Expression     : "an expression"
+
+%error statement-error : "Statement error ($m)"
+%error condition-error : "Malformed condition ($m)"
+
+%start Block
+
+%%
+
+Block         : '{' StatementList '}'
+              ;
+
+StatementList : StatementList Statement
+              | 
+              ;
+
+Statement     : IfStatement
+              | WhileStatement
+              | Expression ';'
+              | statement-error ';'
+              ;
+
+IfStatement   : _if Condition Block
+              ;
+
+WhileStatement: _while Condition Block
+              ;
+
+Condition     : '(' Expression eq Expression ')'
+              | '(' Expression ne Expression ')'
+              | '(' condition-error ')'
+              ;
+
+Expression    : Expression '+' Expression
+              | Expression '-' Expression
+              | Expression '*' Expression
+              | Expression '/' Expression
+              | '-' Expression %prec unary
+              | '(' Expression ')'
+              | num
+              ;
+
+%%
+
+VAR
+    charNum : INTEGER = 1;
+
+CONST
+    program_code = 
+  '{'#10 +
+  '  if (2==3) {'#10 +
+  '    (1 + 3) **4 / 5 + 20;'#10 +
+  '    22 + -3;'#10 +
+  '  }'#10 +
+  '  while (2 * 3) {'#10 +
+  '    2*2;'#10 +
+  '  }'#10 +
+  '}'#10;
+
+FUNCTION StxNextChar: CHAR;
+BEGIN
+    IF   charNum <= LENGTH(program_code) 
+    THEN BEGIN
+         StxNextChar := program_code[charNum];
+         charNum := charNum + 1;
+         END
+    ELSE StxNextChar := CHR(EOS);
+END;
+
+PROCEDURE StxUngetChar(c:char);
+BEGIN
+    charNum := charNum - 1;
+END;
+
+FUNCTION StxError(StxState:INTEGER; StxSym: INTEGER; pStxStack: INTEGER; aMessage:STRING):INTEGER;
+BEGIN
+    writeln('error near ', StxGetTokenName(StxSym), ': ', aMessage);
+{$IFDEF DEBUG}
+    StxPrintStack();
+{$ENDIF}
+    StxError := ERROR_RE_ATTEMPT;
+END;
+
+FUNCTION StxToString(value:TSTACK):STRING;
+BEGIN
+  StxToString := IntToStr(value);
+END;
+
+BEGIN
+    StxParse();
+END.
+```
 </div>
 </div>
