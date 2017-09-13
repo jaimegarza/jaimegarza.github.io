@@ -16,7 +16,7 @@ layout: page
 * <a href="#rules-code">Code Generation</a>
 * <a href="#rules-example">Intermediate Code</a>
 * <a href="#rules-empty">Empty Rules</a>
-* <a href="#rules-ambiguous">Ambiguous Rules</a>
+* <a href="#rules-prec">Rules Precedence</a>
 
 ##### <a name="rules-example">Learn by Example: Hello Calc!</a>
 
@@ -54,7 +54,7 @@ F     : num
 %%
 ```
 
-In it you can see the non-terminals S, E, T, F, which stand for starting, **expression**, **term** and **factor**. You can also see the tokens '+', '-', '*', '/'. By default, single character tokens do not need to be declared. However, we may want to give them a name and some scanning code. Our operators, numbers and parenthesis need to be returned by the scanner, so lets add a scanner:
+In it you can see the non-terminals S, E, T, F, which stand for **starting**, **expression**, **term** and **factor**. You can also see the tokens '+', '-', '*', '/'. By default, single character tokens do not need to be declared. However, we may want to give them a name and some scanning code. Our operators, numbers and parenthesis need to be returned by the scanner, so lets add a scanner:
 
 ```
 %class {
@@ -311,7 +311,7 @@ java -classpath . Calc <optional-parameters>
 
 To note:
 
-1. the methods getNextChar(), ungetChar(), and parserError() were added to the class. They are implicitly called from calc.parse() as the parsing progresses. The scanner process works on a hardcoded string by default.
+1. the methods getNextChar(), ungetChar(), and parserError() were added to the class. They are implicitly called from calc.parse() as the parsing progresses. Our scanner process works on a hardcoded string by default.
 2. The main method may receive an expression. Try multiple expressions, like "2+3**4" so that you can see the errors.
 4. Please see the file called Calc.html for a full report of what went on. Also, feel free to peruse Calc.java. It should be legible.
 
@@ -425,7 +425,7 @@ For more complex expressions in C or Java, you can use code as follows:
 E : E '+' T   { 
               $$ = $E + $T; 
               println("Found sum");
-            }
+              }
 ```
 
 In the generated code, syntax will try to remove any extra whitespace and will indent to the left.
@@ -485,7 +485,7 @@ In this case, it says that A can be followed by B, which in turn can be empty, a
 
 In this case, syntax will mark a shift/reduce conflict. As specified in <a href="{{ site.baseurl }}/syntax/lexer#lexer-disambiguation">Disambiguation</a>, a Shift/Reduce assumes reduce. Interestingly enough the conflict is in B => <empty>. It assumes that B came if a 3 arrives.
 
-##### <a name="rules-ambiguous">Ambiguous Rules</a>
+##### <a name="rules-prec">Rules Precedence</a>
 
 The section <a href="{{ site.baseurl }}/syntax/lexer#lexer-disambiguation">Disambiguation</a> gives you hints on how to resolve Shift/Reduce conflicts by using the %left and %right symbols. However, it is not always possible to identify these with the symbols. As such, you can add precedence to the rules themselves. You do that with the %prec declaration on a rule.
 

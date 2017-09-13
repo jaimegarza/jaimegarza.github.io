@@ -39,6 +39,7 @@ or by simple text pattern code snippets
       $+
     }
   }
+  return $t;
 }
 ```
 
@@ -91,7 +92,7 @@ and
              $+;
              END;
        $v.n := number;
-       $x(TOK_NUMBER);
+       $x(INTEGER);
        END;
 %
 ```
@@ -128,7 +129,7 @@ $+     | VOID    | Instruction that means "get the next character".
 $l     | INT     | The current lexer mode.
 $m     |         | The current lexer function name, which changes with the mode.
 $t     |         | The current token id
-$r     |         | Used to return from the function. return in java and C, exit() in Pascal.
+$x     |         | Used to return from the function. return in java and C, exit() in Pascal. use like $x($t) which returns the current token.
 
 ##### <a name="lexer-modes">Lexer Modes</a>
 
@@ -502,6 +503,22 @@ BasicElement  : '(' RegExp ')'
               | ANY
               ;
 ```
+
+as such, you can generate lexer code as follows:
+
+```
+%token eq      : "==" /==/ = return eq;
+%token ne      : "!=" /!=/ = return ne;
+
+%token _if     : "if" /if/ = return _if;
+%token _while  : "while" /while/ = return _while;
+
+%token <n> num : "number" /[0-9]*/ = {
+  return num;
+}
+```
+
+Please open the resulting html report file to see the actual regular expression used and their diagrams.
 
 </div>
 </div>
