@@ -345,7 +345,16 @@ Now we are ready to add error recovery to our grammar. The next step is to decla
 %error condition-error : "Malformed condition ($m)"
 ```
 
-These errors indicate somehow that they will be used to identify bad statements and bad conditions. They contain the error message. In addition, they contain a token $m, which stands for message. The message is a default generic error message that syntax produced based on "expected ..." text. This default generic message is per state, generated based on each state's possitive transitions to tokens and non terminals in a succint algorithm. And with such, you can either have an error message, plus the state's error message.
+These errors indicate somehow that they will be used to identify bad statements and bad conditions. They contain the error message. In addition, they contain a token $m, which stands for message. The message is a default generic error message that syntax produced based on "expected ..." text. This default generic message is per state, generated based on each state's possitive transitions to tokens and non terminals in a succint algorithm. And with such, you can either have an error message, plus the state's error message. Please also remember that you can use %group to group tokens to have the state's default error message be more succint. For instance, you can group operators:
+
+
+```
+...
+
+%group op : "operator" '+', '-', '*', '/'
+
+...
+```
 
 These %errors can now be used in production rules. For instance
 
