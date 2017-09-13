@@ -1,0 +1,49 @@
+.syntax {
+  display: inline-block;
+}
+
+.syntax-toc {
+  float: left;
+  width: 190px;
+  font-family: $helveticaNeue;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+}
+
+.syntax-toc ul {
+	list-style: none;
+	padding-left: 15px;
+}
+
+.syntax-toc li {
+  white-space: nowrap;
+}
+
+.syntax-matter {
+  float: right;
+  width: 530px;
+  padding-left: 20px;
+}
+
+.syntax-matter p, 
+.syntax-matter li, 
+.syntax-matter td,  
+.syntax-matter th {
+  font-size: 14px;
+}
+
+.syntax-matter td, .syntax-matter th {
+  padding: 4px;
+  border: 1px solid #ddd;
+}
+
+.syntax-matter pre {
+  font-size: 12px;
+  background-color: #ddd;
+}
+
+.syntax-matter h5 {
+    font-size: 16px;
+    color: #666;
+}

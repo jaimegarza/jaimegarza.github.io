@@ -212,9 +212,9 @@ img {
 
 nav {
   float: right;
-  margin-top: 23px; // @TODO: Vertically middle align
+  margin-top: 40px; // @TODO: Vertically middle align
   font-family: $helveticaNeue;
-  font-size: 18px;
+  font-size: 14px;
 
   @include mobile {
     float: none;
@@ -224,7 +224,7 @@ nav {
   }
 
   a {
-    margin-left: 20px;
+    margin-left: 0px;
     color: $darkGray;
     text-align: right;
     font-weight: 300;
@@ -236,6 +236,8 @@ nav {
     }
   }
 }
+
+@import "syntax";
 
 //
 // .main
