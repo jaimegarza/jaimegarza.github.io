@@ -191,11 +191,12 @@ As you can see, we have defined a language that supports ifs, whiles and express
 
 We can now add our java code around it, to a more complete program. Please note that we have added our error routine as defined in the following table
 
-Language | Routine
----------|:------------------------
-Java     | parserError
-C        | StxError
-Pascal   | StxError
+**Language**   | **Routine**
+---------------|:------------------------
+Java           | parserError
+C              | StxError
+Javascript     | parserError
+Pascal         | StxError
 
 ```
 %{

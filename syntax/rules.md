@@ -14,7 +14,7 @@ layout: page
 
 * <a href="#rules-example">Learn by Example: Hello Calc!</a>
 * <a href="#rules-code">Code Generation</a>
-* <a href="#rules-example">Intermediate Code</a>
+* <a href="#rules-intermediate">Intermediate Code</a>
 * <a href="#rules-empty">Empty Rules</a>
 * <a href="#rules-prec">Rules Precedence</a>
 
@@ -54,7 +54,7 @@ F     : num
 %%
 ```
 
-In it you can see the non-terminals S, E, T, F, which stand for **starting**, **expression**, **term** and **factor**. You can also see the tokens '+', '-', '*', '/'. By default, single character tokens do not need to be declared. However, we may want to give them a name and some scanning code. Our operators, numbers and parenthesis need to be returned by the scanner, so lets add a scanner:
+In it you can see the non-terminals S, E, T, F, which stand for **starting**, **expression**, **term** and **factor**. You can also see the tokens '+', '-', '*', '/', '(', ')'. By default, single character tokens do not need to be declared in C and Java. However, we may want to give them a name and some scanning code. Our operators, numbers and parenthesis need to be returned by the scanner, so lets add a scanner:
 
 ```
 %class {
@@ -195,7 +195,7 @@ F     : num
 
 Several things need to be noted:
 
-1. Code generated is delimited by an equal sign and terminated by a semicolon. For Pascal, the code is terminated with % instead. This is the simple code generation technique. However, if more complex code is needed, it can start with '{' and terminated '}' in C and Java. Syntax will count and level opening and closing curly braces to identify the end of it.
+1. Code generated is delimited by an equal sign and terminated by a semicolon. For Pascal, the code is terminated with % instead. This is the simple code generation technique. However, if more complex code is needed, it can start with '{' and terminated '}' in C, Java and Javascript. Syntax will count and level opening and closing curly braces to identify the end of it.
 2. We use the symbolic names of the non terminals as $E, $T, $F. yacc used positional numbers, as $1, $2, $3. We used such nomenclature in the expression in parenthesis. We could have used the more explicit $E.
 3. The non terminal in the rule is denoted by $$.
 4. There is always a default code rule ```= $$ = $1;``` when there is no code generated. You will not see this in the generated code, but it is implicit. This is the case for ```E : T, F : num, etc.```
@@ -407,7 +407,7 @@ Regex  | Graph
 
 ##### <a name="rules-code">Code Generation</a>
 
-To generate code in C and Java, you can use the equals-sign, semicolon pattern, as in
+To generate code in C, Java and Javascript, you can use the equals-sign, semicolon pattern, as in
 
 ```
 E : E '+' T   = $$ = $E + $T;
@@ -419,7 +419,7 @@ In Pascal, the pattern ends with %, and it looks as follows:
 E : E '+' T   = $$ := $E + $T;%
 ```
 
-For more complex expressions in C or Java, you can use code as follows:
+For more complex expressions in C, Java or Javascript, you can use code as follows:
 
 ```
 E : E '+' T   { 
@@ -430,7 +430,7 @@ E : E '+' T   {
 
 In the generated code, syntax will try to remove any extra whitespace and will indent to the left.
 
-##### <a name="rules-empty">Intermediate Code</a>
+##### <a name="rules-intermediate">Intermediate Code</a>
 
 You can introduce code in the middle of a production, as in the following case:
 

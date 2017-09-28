@@ -36,7 +36,7 @@ or by simple text pattern code snippets
     %v.n = 0;
     while (Character.isDigit($c)) {
       $v.n = $vn * 10 + $c - '0';
-      $+
+      $+;
     }
   }
   return $t;
@@ -45,7 +45,7 @@ or by simple text pattern code snippets
 
 Tokens have an **identifier**. In the previous example, the identifier is INTEGER. This identifier is used in syntactical rules, or productions in the grammar. A token also has a **name**. A name can then be used to appear in error messages as opposed to the identifier. For instance, in the previous examples the name is *an integer*. With this name, the grammar can produce errors like *"expecting an integer"*.
 
-A token can also have a type. A type is an element of a data structure called the %struct, %union, %class or %stack (They are all synonyms and you can choose the one you want. For C it is usually %union, while in Java it could be %class.) A %struct can be constructed as follows, for Java.
+A token can also have a type. A type is an element of a data structure called the %struct, %union, %class or %stack (They are all synonyms and you can choose the one you want. For C it is usually %union, while in Java it could be %class.) Independently of what is selected, we will call it the %struct. A %struct can be constructed as follows, for Java:
 
 ```
 %class {
@@ -59,7 +59,7 @@ A token can also have a type. A type is an element of a data structure called th
 }
 ```
 
-The types in the stack element identified by the class are then **&lt;s&gt;** and **&lt;n&gt;**. Thus, to assign a trype to a token, you declare it like 
+The types in the stack element identified by the %class are then **&lt;s&gt;** and **&lt;n&gt;**. Thus, to assign a type to a token, you declare it like 
 
 ```
 %token INTEGER <n> : "an integer" /[0-9]*/ {
@@ -68,7 +68,7 @@ The types in the stack element identified by the class are then **&lt;s&gt;** an
 }
 ```
 
-The type can thus be used in the grammar to simplify the code generation.
+The type can then be used in the grammar to simplify the code generation.
 
 For pascal output, you can declare the structure as follows:
 
@@ -95,6 +95,15 @@ and
        $x(INTEGER);
        END;
 %
+```
+
+or in Javascript:
+
+```
+%token <n> INTEGER : "an integer" /[0-9]*/ = {
+    $v.n = parseInt($r);
+    return INTEGER;
+}
 ```
 
 ##### <a name="lexer-code">Lexer Code</a>
@@ -129,7 +138,8 @@ $+     | VOID    | Instruction that means "get the next character".
 $l     | INT     | The current lexer mode.
 $m     |         | The current lexer function name, which changes with the mode.
 $t     |         | The current token id
-$x     |         | Used to return from the function. return in java and C, exit() in Pascal. use like $x($t) which returns the current token.
+$r     | String  | The string recognized by the regular expression
+$x     |         | Used to return from the function. return in java, javascript and C, and exit() in Pascal. use like $x($t) which returns the current token.
 
 ##### <a name="lexer-modes">Lexer Modes</a>
 
@@ -274,7 +284,7 @@ F     : num
 %%
 ```
 
-An expression is defined in in terms of a term, and a term is defined via a factor. There are no conflicts.  However, if I would describe E in terms of E, that would cause problems, as follows:
+An expression is defined in in terms of a term, and a term is defined via a factor. There are no conflicts.  However, if we would describe E in terms of E, that would cause problems, as follows:
 
 ```
 %token num : "number"
@@ -355,7 +365,7 @@ Declarator    | Associativity | Shift/Reduce behavior
 %token, %0    | none          | Assume reduce, produce a warning
 %nonassoc, %2 | binary        | Considered an error
 
-%left, %right declare what happens in situations like *a* + *b* * *c*. %left says that *a* + *b* is done first. %right says that *b* * *c* is executed first. The generated parser uses a stack to preserve a, b and c. For right precedence, in *a* + *b* + *c* + *d* + *e* + ... the stack stores a, b, c, d, e, etc. in a stack. At the end it starts popping items from the stack and adding them. %right precedence can thus cause stack overflows at compilation/interpret.
+%left, %right declare what happens in situations like *a* + *b* + *c*. %left says that *a* + *b* is done first. %right says that *b* + *c* is executed first. The generated parser uses a stack to preserve a, b and c. For right precedence, in *a* + *b* + *c* + *d* + *e* + ... the stack stores a, b, c, d, e, etc. in a stack. At the end it starts popping items from the stack and adding them. %right precedence can thus cause stack overflows at compilation/interpret.
 
 With symbols, the previous grammar would look like
 
@@ -386,20 +396,31 @@ Please refer to <a href="{{ site.baseurl }}/syntax/rules#rules-ambiguous">Ambigu
 
 If you decide not to add code in the lexer via %token (or any of its derivatives), or via %lexer, syntax will not add a scanner code. In that case you need to generate a parserElement method as follows:
 
+Java:
 ```
-  // Java
   int parserElement(boolean initialize) {
    ...
   }
+```
 
-(* Pascal *)
+Javascript:
+```
+    function parserElement(initialize) {
+      ...
+    }
+```
+
+Pascal:
+```
 function StxLexer:longint;
 begin
     ...
     StxLexer := 0;
 end;(* StxLexer *)
+```
 
-/* C */
+C:
+```
 unsigned long int StxLexer()
 {
     ...
@@ -413,8 +434,8 @@ initialize is true on the first call in case you need to open streams or other i
 
 If you use the code generation utilities of syntax via %token (or its derivatives), or by using %lexer, then you need to provide a routine to obtain characters, one at a time, for the scanner as follows:
 
+Java:
 ```
-  // Java
   private char getNextChar(boolean initialize) {
     if (initialize) {
       ...
@@ -428,8 +449,27 @@ If you use the code generation utilities of syntax via %token (or its derivative
   private void ungetChar(char c) {
     ...
   }
+```
 
-(* PASCAL *)
+Javascript:
+```
+    function getNextChar(initialize) {
+        if (initialize) {
+          ...
+        }
+        if (charNum < expression.length) {
+            return ...;
+        }
+        return '\0';
+    }
+
+    function ungetChar(c) {
+        ...
+    }
+```
+
+Pascal:
+```
 FUNCTION StxNextChar: CHAR;
 BEGIN
     IF   ...
@@ -443,8 +483,10 @@ PROCEDURE StxUngetChar(c:char);
 BEGIN
     ...
 END;
+```
 
-/* C */
+C:
+```
 char StxNextChar()
 {
     if (...) {
@@ -464,7 +506,7 @@ void StxUngetChar(char c) {
 
 ##### <a name="lexer-regex">Regular Expressions</a>
 
-The regular expressions allowed in syntax are simple regular expressions. There are plans to enrich them in the future to be perl compliant. However, this is not yet the case. But they are quite powerful and enough for most cases.
+The regular expressions allowed in Syntax are simple regular expressions. There are plans to enrich them in the future to be perl compliant. However, this is not yet the case. But they are quite powerful and enough for most cases.
 
 Regular expressions are defined (in syntax language, of course) as:
 
