@@ -17,7 +17,7 @@ To install syntax-maven-plugin in your project, you need to enter the following 
 <plugin>
     <groupId>me.jaimegarza</groupId>
     <artifactId>syntax-maven-plugin</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <executions> 
       <execution>
         <id>generate-parser</id>
