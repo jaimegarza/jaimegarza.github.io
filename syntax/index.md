@@ -39,7 +39,7 @@ I thought that having a yacc like syntax would help the introduction and teachin
   * **Javascript, for Node.js and Nashorn on JVM**
   * Future: Other JVM languages
 1. Translated to Java from its 1985 apple basic, and 2006 C codebase. The grammar definition is in Syntax format. Syntax is used to generate Syntax itself!
-1. Support for <a href="{{ site.baseurl }}/syntax/lexic-driven-parsers">lexic-driven parsers</a>. Unlike standard parsers, lexic driven parsers allow you to move in the parse graph by keeping state. The lexer calls the parser, and when done with transitions, control is returned to the lexer who can wait for the next token.
+1. Support for <a href="{{ site.baseurl }}/syntax/lexdriven">lexic-driven parsers</a>. Unlike standard parsers, lexic driven parsers allow you to move in the parse graph by keeping state. The lexer calls the parser, and when done with transitions, control is returned to the lexer who can wait for the next token.
 1. Ability to compile with **LALR** (yacc) or **SLR**, more compact and simple, albeit a little more restrictive
 1. Eject the output table in a **compressed mode** (yacc) or a **matrix**, for readability/teachability. Also, produce a rich **HTML report**.
 1. Unlike yacc and bison, the output is **properly formated and readable!**
