@@ -3,29 +3,33 @@ layout: default
 ---
 
 <div class="cycle-slideshow"
-    data-cycle-caption-plugin="caption2">
+    data-cycle-caption-plugin="caption2"
+    data-cycle-slides="> a">
     <div class="cycle-pager"></div>
     <div class="cycle-prev"></div>
     <div class="cycle-next"></div>
     <div class="cycle-overlay"></div>
 
-    <img src="{{ site.baseurl }}/images/home_slider/working-hard.png" data-cycle-desc="Discover a little about me in this short bio." />
-    <img src="{{ site.baseurl }}/images/home_slider/syntax.png" data-cycle-desc="A powerful compiler generator for java, pascal and C" />
-    <img src="{{ site.baseurl }}/images/home_slider/reborn-tree.png" data-cycle-desc="Un ensayo sobre reiniciar la vida en un nuevo país. Picture used under the creative commons license." />
-    <img src="{{ site.baseurl }}/images/home_slider/honeymoon.png" data-cycle-desc="Our honeymoon in Mexico City and Cancun!" />
+    <a href="{{ site.baseurl }}/about" data-cycle-desc="Discover a little about me in this short bio." ><img src="{{ site.baseurl }}/images/home_slider/working-hard.png" /></a>
+    <a href="{{ site.baseurl }}/syntax" data-cycle-desc="A powerful compiler generator for java, javascript, pascal and C" ><img src="{{ site.baseurl }}/images/home_slider/syntax.png"/></a>
+    <a href="{{ site.baseurl }}/Vivir-Dos-Veces" data-cycle-desc="Un ensayo sobre reiniciar la vida en un nuevo país. Picture used under the creative commons license." ><img src="{{ site.baseurl }}/images/home_slider/reborn-tree.png"/></a>
+    <a href="#" data-cycle-desc="Our honeymoon in Mexico City and Cancun!" ><img src="{{ site.baseurl }}/images/home_slider/honeymoon.png"/></a>
 </div>
 
 <div class="posts">
   {% for post in site.posts %}
     <article class="post">
 
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+      <h2 class="title"><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
+      <h4 class="subtitle">By {{ post.author }} On {{ post.date | date: "%B %e, %Y" }} </h4>
 
       <div class="entry">
         {{ post.excerpt }}
       </div>
 
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+      {% if post.more %}
+        <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+      {% endif %}
     </article>
   {% endfor %}
 </div>

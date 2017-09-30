@@ -9,7 +9,7 @@ layout: page
 
 <div class="syntax-matter">
 
-#### Lexic Driven Parsing
+#### Lexer Driven Parsing
 ---
 
 * <a href="#lexdriven-concepts">Concepts</a>
@@ -56,7 +56,7 @@ E : E '+' E
 
 ```
 
-We can display a state as follows. 
+We can display a state where an expression has been seen as follows. 
 
 ```
 State 1:
@@ -74,7 +74,7 @@ E -> E . * E
 E -> E . / E
 ```
 
-The dot in the definitions denotes what would the parser had seen. State 1 signifies that the parser saw an expression (E), and that after that the end or a '+', '-', '*', '/' can appear. State 1 can be seen as allowing an operator or the end of the input. State 2 on the other hand has been reached only when a parenthesis was used and thus a closing parenthesis is valid, but not the end of the input.  Let's show this in the calculator diagrams.  Invalid tokens in a state will  be shown
+The dot in the definitions denotes what would the parser had seen. State 1 signifies that the parser saw an expression (E), and that after that you can have the end of the expression or an operator ('+', '-', '*', '/'). State 1 can then be seen as allowing an operator or the end of the input. State 2 on the other hand has been reached only when a parenthesis was used and thus a closing parenthesis is valid, but not the end of the input.  Let's show this in the calculator diagrams.  Invalid tokens in a state will  be shown
 as periods.
 
 For state 1:
@@ -99,7 +99,7 @@ As it can be seen, we can call the parser and command it to stop when a new symb
 
 ##### <a name="lexdriven-javascriptexample">Javascript Example</a>
 
-```
+{% highlight javascript%}
 %{
 if (!console) { // i.e. nashorn
     var console = { log: print };
@@ -132,11 +132,14 @@ var calc = (function() {
 
 %name E : "expression";
 
-%start E
+%start S
 
 %group OPS : "operator" '+', '-', '*', '/';
 
 %%
+S : E
+  ;
+
 E : E '+' E     = $$ = $1 + $3;
   | E '-' E     = $$ = $1 - $3;
   | E '*' E     = $$ = $1 * $3;
@@ -216,14 +219,14 @@ parseOne('+', 0);
 parseOne(32769, 20); // number 20
 parseOne(0, 0);
 console.log("Result=", getResult());
-```
+{% endhighlight %}
 
 As can be seen, the syntax file looks identical to a standard parser grammar, minus the lexical analyzer. No lexer code, nor regular expressions are needed anymore.
 
 This example uses some routines that may need an explanation. 
 
 * **init()** has to be called on the parser. It can be called multiple times but everytime it would reset the parser to its initial state.
-* **getValidTokens()** obtains the possible tokens in the parser given its current state. It then converts the tokens to their token names by calc.getTokenName(), returning a single string separated by commas, ready for display.
+* **getValidTokens()** obtains the possible tokens in the parser given its current state. It then converts the tokens to their token names by **calc.getTokenName()**, returning a single string separated by commas, ready for display.
 * **parseOne()** is just a utility routine that calls the parser with the current token and a value. It just logs the token, value and status returned by the scanner, plus the valid tokens.
 * a **parse function** interface routine is created that for our example converts characters to their token number nd creates an object of the StackElement type:
 
