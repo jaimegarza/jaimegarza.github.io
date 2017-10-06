@@ -302,6 +302,26 @@ nav {
    margin-top: 15px;
 }
 
+.gallery {
+  list-style-type: none;
+  margin: 0 0 75px 0;
+  padding: 0;
+}
+
+.gallery li {
+  display: table;
+}
+
+.thumbnail {
+  font-size: 13px;
+}
+
+.thumbnail img {
+   float: left;
+   width: 120px;
+   padding: 0 20px 20px 0;
+}
+
 .wrapper-footer {
   margin-top: 50px;
   border-top: 1px solid #ddd;
