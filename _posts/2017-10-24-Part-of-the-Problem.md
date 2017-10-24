@@ -13,10 +13,8 @@ Am I part of the problem? Which one is my raza? Having come to the USA, am I as 
 
 I find some pleasure finding royal ancestry on the Spanish, Portuguese, French, English and German sides of my family. It is fun. Or is it? One of my ancestors, King Phillip of Swabia, of house Hohenstaufen had the distinction of being the first German King to be assasinated. My favorite name so far is on the English side: ​Ælfthryth of Wessex. One vowel, a weird one at that. Awesome.
 
-<a href="https://en.m.wikipedia.org/wiki/%C3%86lfthryth,_Countess_of_Flanders">​Ælfthryth of Wessex</a>
-
 Or Louis VI “The Fat King” of France. No wonder the weight issues. But perhaps the most satisfying of them all is Alfonso X el Sabio, of Spain. Renowned poet and wise king. I always admired his writings while in Mexico. Good job great great great great ... grandfather.
 
-But the most amazing part is imagining all those women in my line that made me possible. One of them, Juana de Porcallo, was assassinated by her husband the Governor of Nuevo León Diego de Montemayor. Another one also murdered. Unknown circumstances. They were for sure not part of the problem. Except Ælfthryth, who was crowned queen and a renowned bad at that. She killed her stepson Edward the Martyr, and she is depicted as a bad person in medieval stories. Oh well.
+But the most amazing part is imagining all those women in my line that made me possible. One of them, Juana de Porcallo, was assassinated by her husband the Governor of Nuevo León Diego de Montemayor. Another one also murdered. Unknown circumstances. They were for sure not part of the problem. Except Ælfthryth, who was crowned queen and a renowned bad at that. She killed her stepson Edward the Martyr, and she is depicted as a bad person in medieval stories. Oh well. I hope I have my story right.
 
 I have been blessed nonetheless.
