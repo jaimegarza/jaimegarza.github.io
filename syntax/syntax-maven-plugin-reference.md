@@ -29,7 +29,7 @@ The following parameters can be entered through the configuration.
 &lt;debug&gt;                   | No           | Produces parser phase output.
 &lt;emitLine&gt;                | No           | For C, do you want #line statements pointing to the .syntax file? 
 &lt;packed&gt;                  | No           | Default to tabular. Valid values are packed, tabular. Use tabular for a clearer parser table. Not recommended for large grammars.
-&lt;driver&gt;                  | No           | Default to parser. Valid values are parser, <a href="https://github.com/jaimegarza/syntax/wiki/Lexic-driven-parsers">scanner</a>
+&lt;driver&gt;                  | No           | Default to parser. Valid values are parser, scanner.
 &lt;margin&gt;                  | No           | Used to change the emitted code's right margin. Should be greater than 80
 &lt;indent&gt;                  | No           | Used to change the emitted code's indentation. Default is 2
 

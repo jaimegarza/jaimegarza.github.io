@@ -76,7 +76,7 @@ In it you can see the non-terminals S, E, T, F, which stand for **starting**, **
      , ')' : "closing parenthesis"
                         = if ($c == ')') {$+; return ')';};
 
-%token <n> num : "number" /[0-9]*/ = {
+%token <n> num : "number" /[0-9][0-9]*/ = {
   $v.n = Integer.parseInt($r);
   return num;
 }
@@ -155,7 +155,7 @@ Now, it is simple enough to add some code to our calculator:
      , ')' : "closing parenthesis"
                         = if ($c == ')') {$+; return ')';};
 
-%token <n> num : "number" /[0-9]*/ = {
+%token <n> num : "number" /[0-9][0-9]*/ = {
   $v.n = Integer.parseInt($r);
   return num;
 }
@@ -195,10 +195,19 @@ F     : num
 
 Several things need to be noted:
 
-1. Code generated is delimited by an equal sign and terminated by a semicolon. For Pascal, the code is terminated with % instead. This is the simple code generation technique. However, if more complex code is needed, it can start with '{' and terminated '}' in C, Java and Javascript. Syntax will count and level opening and closing curly braces to identify the end of it.
-2. We use the symbolic names of the non terminals as $E, $T, $F. yacc used positional numbers, as $1, $2, $3. We used such nomenclature in the expression in parenthesis. We could have used the more explicit $E.
+1. Code generated is delimited by an equal sign and terminated by a semicolon. For Pascal, the code is terminated with % instead. This is the simple code generation technique. However, if more complex code is needed, it can start with '{' and terminate it with '}' in C, Java and Javascript. Syntax will count and level opening and closing curly braces to identify the end of it.
+2. We use the symbolic names of the non terminals as $E, $T, $F. yacc used positional numbers, as $1, $2, $3. We used such nomenclature in the expression in parenthesis for ilustration purposes. We could have used the more explicit $E.
 3. The non terminal in the rule is denoted by $$.
-4. There is always a default code rule ```= $$ = $1;``` when there is no code generated. You will not see this in the generated code, but it is implicit. This is the case for ```E : T, F : num, etc.```
+4. There is always a default code rule when there is no code generated.
+```
+= $$ = $1;
+```
+You will not see this in the generated code, but it is implicit. This is the case for 
+```
+E : T
+...
+F : num
+```
 5. Sometimes there are two symbols repeated in the same rule. For instance, in the ambiguous grammar where E : E '+' E, we need to use positional parameters.
 6. Syntax will know that $E has a type &lt;n&gt;, so when the code is generated it will be generated with access to *element*.n automatically. We could have not declared the type of E, T or F, and as such, the code would have to read $E.n, $T.n, $F.n.
 7. It is up to you to add additional getters, toString() or whatever is needed to your %class declaration. Remember that %class has synonyms %union, %struct.
@@ -229,7 +238,7 @@ public class Calc {
      , ')' : "closing parenthesis"
                         = if ($c == ')') {$+; return ')';};
 
-%token <n> num : "number" /[0-9]*/ = {
+%token <n> num : "number" /[0-9][0-9]*/ = {
   $v.n = Integer.parseInt($r);
   return num;
 }
@@ -399,12 +408,6 @@ And some of the code generated:
   }
 ```
 
-And, from Calc.html
-
-Regex  | Graph
--------|----------
-[0-9]* | <img src="{{ site.baseurl }}/syntax/regex.png" />
-
 ##### <a name="rules-code">Code Generation</a>
 
 To generate code in C, Java and Javascript, you can use the equals-sign, semicolon pattern, as in
@@ -438,7 +441,7 @@ You can introduce code in the middle of a production, as in the following case:
 E : E '+' { // Some code } T = $$ = $E + $T;
 ```
 
-The code // Some code will be generated. In order to achieve this, syntax will generate a new rule, implicitly, as if this was done like this:
+The code _// Some code_ will be generated. In order to achieve this, syntax will generate a new rule, implicitly, as if this was done like this:
 
 ```
 $code-fragment-1 : { // Some Code }
@@ -481,7 +484,7 @@ D : '3'
 %%
 ```
 
-In this case, it says that A can be followed by B, which in turn can be empty, and then followed by C, which in turn can be empty, and then D. Or it can be simply D.  So imagine that you feed the parser the string "3". It can be reached both by the first or second rules. Which way would it go? It can be BOTH B C D, or just D.
+In this case, it says that A can be followed by B, which can be empty, and then followed by C, which in turn can be empty, and then D. Or it can be simply D.  So imagine that you feed the parser the string "3". It can be reached both by the first or second rules. Which way would it go? It can be BOTH B C D, or just D.
 
 In this case, syntax will mark a shift/reduce conflict. As specified in <a href="{{ site.baseurl }}/syntax/lexer#lexer-disambiguation">Disambiguation</a>, a Shift/Reduce assumes reduce. Interestingly enough the conflict is in B => <empty>. It assumes that B came if a 3 arrives.
 
@@ -489,7 +492,7 @@ In this case, syntax will mark a shift/reduce conflict. As specified in <a href=
 
 The section <a href="{{ site.baseurl }}/syntax/lexer#lexer-disambiguation">Disambiguation</a> gives you hints on how to resolve Shift/Reduce conflicts by using the %left and %right symbols. However, it is not always possible to identify these with the symbols. As such, you can add precedence to the rules themselves. You do that with the %prec declaration on a rule.
 
-The way in which deambiguation works is by using tokens to define precedence. But at the end it is the rules themselves that have a final precedence. Each rule has a precedence. It is equal to the precedence of the **last** token in the production of the non terminal. 
+The way in which deambiguation works is by using tokens to define precedence. But at the end it is the rules themselves that have a final precedence. Each rule has a precedence. It is equal to the precedence of the **last token** in the production of the non terminal. 
 
 We will extend the example on Disambiguation. The usual precedence of operators is +,- have the lowest precedence, with *,/ next, followed by unary negative or possitive numbers. For instance:
 

@@ -22,10 +22,12 @@ layout: page
 * <a href="#lexer-regex">Regular Expressions</a>
 
 ##### <a name="token-def">Token Definitions</a>
-The lexic of a language is its *vocalbulary*. Just like english where you have pronouns, verbs, adverbs, numbers, etc., the lexic of a language defines the most basic elements. The lexic of a language includes things like number, identifier, operator, etc. They do not necessarily follow a set of rules, but rather a set of patterns. The lexical analyzer of the language is also known as a **scanner**, and it produces/recognizes **tokens**, or **terminal symbols**. These can be either represented by regular expressions like:
+The lexic of a language is its *vocabulary*. Just like english where you have pronouns, verbs, adverbs, numbers, etc., the lexic of a language defines the most basic elements. The lexic of a language includes things like number, identifier, operator, etc. They do not necessarily follow a **set of rules**, but rather a **set of patterns**. The lexical analyzer of the language is also known as a **scanner**, and it produces/recognizes **tokens**, or **terminal symbols**. These can be either represented by regular expressions like:
 
 ```
-%token INTEGER : "an integer" /[0-9]*/
+%token INTEGER : "an integer" /[0-9][0=9]*/ = {
+  $v.n = Integer.parseInt($r);
+}
 ```
 
 or by simple text pattern code snippets
@@ -43,9 +45,13 @@ or by simple text pattern code snippets
 }
 ```
 
-Tokens have an **identifier**. In the previous example, the identifier is INTEGER. This identifier is used in syntactical rules, or productions in the grammar. A token also has a **name**. A name can then be used to appear in error messages as opposed to the identifier. For instance, in the previous examples the name is *an integer*. With this name, the grammar can produce errors like *"expecting an integer"*.
+Tokens have an **identifier**. In the previous example, the identifier is INTEGER. This identifier is used in syntactical rules, or productions in the grammar. A token also has a **name**. A name can then be used to appear in error messages as opposed to the identifier. For instance, in the previous examples the name is *an integer*. With this name, the grammar can produce errors like *"expecting an integer"*. The default name is the same as the identifier.
 
-A token can also have a type. A type is an element of a data structure called the %struct, %union, %class or %stack (They are all synonyms and you can choose the one you want. For C it is usually %union, while in Java it could be %class.) Independently of what is selected, we will call it the %struct. A %struct can be constructed as follows, for Java:
+A token can also have **lexer code** associated with it. It is optional. It is represented by having an equals sign plus additional code. If it is a single line of code, in Java, C and Javascript, finish it with a semicolon. If it is multi-line, open with a curly brace afte the equals sign. Syntax will match opening and closing curly braces after that. For pascal, always end the lexical code with %.
+
+Please note that the matching of curly braces is literal, not contextual. What this means is that you use a "{" in a string constant, it will be matched as an opening. For this reason, use of curly braces needs to be balanced, and curly braces in strings need to be entered with their matching hexadecimal/octal escape equivalents.
+
+A token can also have a **type**. A type is an element of a data structure called the %struct, %union, %class or %stack (They are all synonyms and you can choose the one you want. For C it is usually %union, while in Java it could be %class.) Independently of what is selected, we will call it the %struct. A %struct can be constructed as follows, for Java:
 
 ```
 %class {
@@ -59,10 +65,10 @@ A token can also have a type. A type is an element of a data structure called th
 }
 ```
 
-The types in the stack element identified by the %class are then **&lt;s&gt;** and **&lt;n&gt;**. Thus, to assign a type to a token, you declare it like 
+The types in the stack element identified by the %class are then **&lt;n&gt;** and **&lt;s&gt;**. Thus, to assign a type to a token, you declare it like 
 
 ```
-%token INTEGER <n> : "an integer" /[0-9]*/ {
+%token INTEGER <n> : "an integer" /[0-9]+/ {
   $v.n = Integer.parseInt($r);
   return $t;
 }
@@ -100,7 +106,7 @@ and
 or in Javascript:
 
 ```
-%token <n> INTEGER : "an integer" /[0-9]*/ = {
+%token <n> INTEGER : "an integer" /[0-9]+/ = {
     $v.n = parseInt($r);
     return INTEGER;
 }
@@ -130,20 +136,20 @@ or in pascal
 
 When writing code in your lexer, you can use the following symbols
 
-Symbol | Type    | Description
--------|:--------|:------------
-$c     | CHAR    | The current character in the input stream.
-$v     | %struct | The output associated element in the parsing stack. Its elements are those of the structure.
-$+     | VOID    | Instruction that means "get the next character".
-$l     | INT     | The current lexer mode.
-$m     |         | The current lexer function name, which changes with the mode.
-$t     |         | The current token id
-$r     | String  | The string recognized by the regular expression
-$x     |         | Used to return from the function. return in java, javascript and C, and exit() in Pascal. use like $x($t) which returns the current token.
+Symbol | Description
+-------|:------------
+$c     | The current character in the input stream.
+$v     | It is of the type of the structure. The output associated element in the parsing stack. Its elements are those of the structure.
+$+     | Instruction that means "get the next character". It will insert the code to advance to the next character
+$l     | Integer type. The current lexer mode.
+$m     | String. The current lexer function name, which changes with the mode.
+$t     | String. The current token id
+$r     | String. The string recognized by the regular expression
+$x     | Instruction used to return from the function. _return_ in java, javascript and C, and _exit()_ in Pascal. Use like $x($t) which returns the current token.
 
 ##### <a name="lexer-modes">Lexer Modes</a>
 
-Sometimes writing a lexer, you discover that certain parts of the lexer scan in a different ways than others. For instance, imagine that your main scanner skips white space to locate elements, like in perl or other language. Perl, however, uses delimiters to mark regular expressions, like qx, or /, After recognizing the / character you have to scan character by character not skipping blanks since blanks are valid characters in a regular expression.
+Sometimes when writing a lexer you discover that certain parts of the lexer scan in a different ways than others. For instance, imagine that your main scanner skips white space to locate elements, like in perl or other language. Perl, however, uses delimiters to mark regular expressions, like qx, or /, After recognizing the / character you have to scan character by character not skipping blanks since blanks are valid characters in a regular expression.
 
 You can create lexer code that is separated from each other by using the **[MODE]** notation in tokens as in the next example:
 
@@ -253,7 +259,7 @@ This would generate something like this:
 
 ##### <a name="lexer-disambiguation">Disambiguation</a>
 
-Syntax will warn you when a Shift/Reduce conflicts exist in the grammar. Sometimes these are harmless, and thus can be ignored if you know how the parsing works by default. Some other times you can explicitly resolve these conflicts with token symbols for this purpose.
+Syntax will warn you when a Shift/Reduce conflict(s) exist in the grammar. Sometimes these are harmless, and thus can be ignored if you know how the parsing works by default. Some other times you can explicitly resolve these conflicts with token symbols for this purpose.
 
 A Shift/Reduce conflict happens when the parser does not know for sure if, when encountering a token, a new state needs to be reached, or if a rule has been recognized. A Reduce/Reduce conflict happens when a grammar is not context free. Pretty much two or more rules are recognized. Syntaxt will raise its hands in the air and say: "I don't know what I should do!" and then it will report an error. Special token definitions are present to disambiguate Shift/Reduce conflicts. Reduce/Reduce conflicts require a redesign of the rules.
 
@@ -555,7 +561,7 @@ as such, you can generate lexer code as follows:
 %token _if     : "if" /if/ = return _if;
 %token _while  : "while" /while/ = return _while;
 
-%token <n> num : "number" /[0-9]*/ = {
+%token <n> num : "number" /[0-9]+/ = {
   return num;
 }
 ```

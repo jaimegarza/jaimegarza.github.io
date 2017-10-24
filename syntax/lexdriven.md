@@ -23,7 +23,7 @@ checking for grammar compliance and generating code and other structures as a re
 **Lexical driven parsers** differ in the fact that the input stream is discontinuous, usually user driven. The parser gets created and then
 waits for an input to come as a method call, keeping state of where it has been. The parser will receive the input and check it for correctness, causing shifts and reduces with the given symbol.  When a state is reached that requires a new symbol, the parser will stop, store its state, and return from the method call.
 
-As part of keeping state, a lexical driven parser will be able to inform what possible symbols are possible in the next method call, thus allowing user interfaces to enable/disable symbols.  The typical case that I have encountered in the past was a calculator with operators, numbers and parenthesis.  The buttons get enabled only on the presence of valid symbol transitions on the current parser state.  Consider the following calculator:
+As part of keeping state, a lexical driven parser will be able to inform what symbols are possible in the next method call, thus allowing user interfaces to enable/disable symbols.  The typical case that I have encountered in the past was a calculator with operators, numbers and parenthesis.  The buttons get enabled only on the presence of valid symbol transitions on the current parser state.  Consider the following calculator:
 
 ```
 [1] [2] [3]  [+]
@@ -59,14 +59,14 @@ E : E '+' E
 We can display a state where an expression has been seen as follows. 
 
 ```
-State 1:
+State x:
 S ->  E .
 E -> E . + E
 E -> E . - E
 E -> E . * E
 E -> E . / E
 
-State 2:
+State y:
 E -> (  E . )
 E -> E . + E
 E -> E . - E
@@ -74,10 +74,10 @@ E -> E . * E
 E -> E . / E
 ```
 
-The dot in the definitions denotes what would the parser had seen. State 1 signifies that the parser saw an expression (E), and that after that you can have the end of the expression or an operator ('+', '-', '*', '/'). State 1 can then be seen as allowing an operator or the end of the input. State 2 on the other hand has been reached only when a parenthesis was used and thus a closing parenthesis is valid, but not the end of the input.  Let's show this in the calculator diagrams.  Invalid tokens in a state will  be shown
+The dot in the definitions denotes what would the parser had seen. State x signifies that the parser saw an expression (E), and that after that you can have the end of the expression or an operator ('+', '-', '*', '/'). State x can then be seen as allowing an operator or the end of the input. State y on the other hand has been reached only when a parenthesis was used and thus a closing parenthesis is valid, but not the end of the input.  Let's show this in the calculator diagrams.  Invalid tokens in a state will  be shown
 as periods.
 
-For state 1:
+For state x:
 ```
  .   .   .   [+]
  .   .   .   [-]
@@ -86,7 +86,7 @@ For state 1:
       [ = ]
 ```
 
-And for state 2:
+And for state y:
 ```
  .   .   .   [+]
  .   .   .   [-]
@@ -228,7 +228,7 @@ This example uses some routines that may need an explanation.
 * **init()** has to be called on the parser. It can be called multiple times but everytime it would reset the parser to its initial state.
 * **getValidTokens()** obtains the possible tokens in the parser given its current state. It then converts the tokens to their token names by **calc.getTokenName()**, returning a single string separated by commas, ready for display.
 * **parseOne()** is just a utility routine that calls the parser with the current token and a value. It just logs the token, value and status returned by the scanner, plus the valid tokens.
-* a **parse function** interface routine is created that for our example converts characters to their token number nd creates an object of the StackElement type:
+* a **parse function** interface routine is created that for our example converts characters to their token number and creates an object of the StackElement type:
 
 ```
         parse: function (token, value) {
@@ -254,7 +254,7 @@ java -jar syntax-<version>.jar --language js --driver scanner Calc.sy
 jjs Calc.js
 ```
 
-Notice the --driver option given
+Notice the **--driver** option given
 
 The output of the execution gives:
 

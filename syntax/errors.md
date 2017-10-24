@@ -20,7 +20,7 @@ layout: page
 
 Unlike top down parsers, it is actually quite easy to produce a recoverable parser. A recoverable parser is a parser that can report on one error, backtrack states and forward tokens until a valid transition can be made, and proceed from there either producing more errors or continuing to the end.
 
-The first step in syntax for error recovery process is declaring %error tokens. Unlike yacc and bison (which predeclare an error token by default,) syntax requires you to declare your error tokens with %error. There is a reason for it: error messages. Let's work through an example
+The first step in syntax for error recovery process is declaring %error tokens. Unlike yacc and bison (which predeclare an _error_ token by default,) Syntax requires you to declare your error tokens with %error. There is a reason for it: error messages. Let's work through an example
 
 ```
 %token '{'     : "opening curly brace"
@@ -116,7 +116,7 @@ We have declared our tokens, now let's add a lexer:
 %token _if     : "if" /if/ = return _if;
 %token _while  : "while" /while/ = return _while;
 
-%token <n> num : "number" /[0-9]*/ = {
+%token <n> num : "number" /[0-9]+/ = {
   return num;
 }
 
@@ -227,7 +227,7 @@ public class Statement {
 %token _if     : "if" /if/ = return _if;
 %token _while  : "while" /while/ = return _while;
 
-%token <n> num : "number" /[0-9]*/ = {
+%token <n> num : "number" /[0-9]+/ = {
   return num;
 }
 
@@ -346,7 +346,7 @@ Now we are ready to add error recovery to our grammar. The next step is to decla
 %error condition-error : "Malformed condition ($m)"
 ```
 
-These errors indicate somehow that they will be used to identify bad statements and bad conditions. They contain the error message. In addition, they contain a token $m, which stands for message. The message is a default generic error message that syntax produced based on "expected ..." text. This default generic message is per state, generated based on each state's possitive transitions to tokens and non terminals in a succint algorithm. And with such, you can either have an error message, plus the state's error message. Please also remember that you can use %group to group tokens to have the state's default error message be more succint. For instance, you can group operators:
+These errors indicate somehow that they will be used to identify bad statements and bad conditions. They contain the error message. In addition, they contain a token $m, which stands for default message. The default message is a default generic error message that syntax produced based on "expected ..." text. This default generic message is per state, generated based on each state's possitive transitions to tokens and non terminals in a succint algorithm. And with such, you can either have an error message, plus the state's error message. Please also remember that you can use %group to group tokens to have the state's default error message be more succint. For instance, you can group operators:
 
 
 ```
@@ -443,7 +443,7 @@ This is the example in C
 %token _if     : "if" /if/ = return _if;
 %token _while  : "while" /while/ = return _while;
 
-%token <n> num : "number" /[0-9]*/ = {
+%token <n> num : "number" /[0-9]+/ = {
   return num;
 }
 
@@ -582,7 +582,7 @@ VAR
 %token _if     : "if" /if/ = $x(_if);%
 %token _while  : "while" /while/ = $x(_while);%
 
-%token <n> num : "number" /[0-9]*/ =
+%token <n> num : "number" /[0-9]+/ =
   $x(num);
 %
 

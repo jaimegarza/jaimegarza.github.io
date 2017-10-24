@@ -38,16 +38,17 @@ Additional code
 
 ```
 
-The %{ .. %} and %% markers are present in every syntax file. The delimit the three sections of the file. Extension is usually .sy. %{ ...%} markers are completelly optional, and can appear multiple times.
+The %% markers are present in every syntax file. They delimit the three sections of the file. %{ ...%} markers (matched) are completelly optional, and can appear multiple times.
 
-* The program declarations are fragments of code for the native language being used for the output. For example, java files may have the package, import and class declarations.
+* The program declarations are fragments of code for the native language being used for the output. For example, java files may have the package, import and class declarations. For javascript, it could be the top part of an IIFE (Immediately-Invoked Function Expression.) For Pascal it can be the module or program declaration.
 * The syntax declarations declare the terminals, non terminals, error definitions, lexer and other components of the grammar.
 * The rules specify the grammar rules by declaring how non terminals are to be constructed.
 * The additional code can be anything on the desired target language.
+* File extension is usually .sy. 
 
 ##### <a name="struct-decl">Declaration Meta Symbols</a>
 
-When in the program declaration section, you can use the following meta symbols
+When in the _program declaration_ section, you can use the following meta symbols
 
 Symbol | Description
 -------|:-----------
