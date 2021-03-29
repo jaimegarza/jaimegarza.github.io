@@ -7,6 +7,7 @@ tags:
   - Thinking of the soul
 category: blog
 blog: true
+more: yes
 ---
 
 My brother died, unconscious for 31 days and alone in a hospital bed in the ICU. He died of COVID 19. And so did my two cousins, a nephew and my wife’s uncle, leaving devastated families behind, with memories, funerals, slide shows, burial grounds, tears and empty chairs.  All around us, life goes on, families protesting the fact that their living children cannot go to their live school classes, desensitized to the human toll happening all around. And what happens with the dead?
