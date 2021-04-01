@@ -22,7 +22,7 @@ I struggle with this fictitious world of ghosts even though this gives families 
 
 Legend has it that Neil Armstrong took with him music to be played. He landed the Eagle in the moon, a first. He put his foot down, also a first, after which he placed the first flag, forever disrupting the pristine rock that is the moon. The first music heard on the moon was the New World symphony by Antonin Dvorak. I happened to stream it just the other day in a production under the direction of Claudio Abbado.  He is dead but his soul will live with us as far as someone watches him conducting, the great master of the whispering music, as played in the fourth movement of Mahler’s 9th. Dvorak soul lives forever. I feel them in my life and so do many other people. Before the symphony there had never been music in the moon for millions of years. Music vibrations may persist for all we know. 
 
-Billie Holiday, Thelonious Monk, Coltrane, James Brown. Their soul remains. Picasso, Rothko, Mondrian, Klein and his blue, all of them imprinted in my mind. Cortazar, Gertrude Stein, Virginia Wolfe, all here, around me. 
+Billie Holiday, Thelonious Monk, Coltrane, James Brown. Their soul remains. Picasso, Rothko, Mondrian, Klein and his blue, all of them imprinted in my mind. Cortazar, Gertrude Stein, Virginia Woolf, all here, around me. 
 
 ## The self
 
