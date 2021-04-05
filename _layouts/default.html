@@ -4,18 +4,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
+{% seo %}
+{% include meta.html %}
 
-    {% include meta.html %}
-
-    {% seo %}
     <!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/slideshow.css" />
-    <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.baseurl }}/feed.xml" />
     <script src="{{ site.baseurl }}/js/jquery-3.2.1.js" ></script>
     <script src="{{ site.baseurl }}/js/jquery.cycle2.min.js" ></script>
     <script src="{{ site.baseurl }}/js/jquery.cycle2.caption2.min.js" ></script>
