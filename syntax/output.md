@@ -315,7 +315,7 @@ var getResult = function() {
 ##### Output html
 </div>
 
-<div class="syntax-matter" markdown="0">
+<div class="syntax-matter-output" markdown="0">
 
 <div class="heading">javascript-test.sy</div>
 
