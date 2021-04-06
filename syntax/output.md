@@ -2,7 +2,6 @@
 layout: page
 ---
 
-{::options parse_block_html="true" /}
 <div class="syntax">
 {% include syntax-header.html %}
 {% include syntax-navigation.html %}
@@ -151,7 +150,8 @@ layout: page
   }
 </style>
 
-#### SYNTAX
+##### Language Specification
+
 ```
 %{
 if (!console) { // i.e. nashorn
@@ -312,7 +312,8 @@ var getResult = function() {
 }
 ```
 
-#### OUTPUT
+##### Output html
+<div markdown="0">
 
 <div class="heading">javascript-test.sy</div>
 
@@ -2480,6 +2481,8 @@ Conflict with / resolved by Reduce
     <tr><td class="left">States</td><td class="left">34</td></tr>
   </table>
 <div class="close">&nbsp;</div>
+
+</div>
 
 </div>
 </div>
