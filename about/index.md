@@ -17,6 +17,10 @@ The next step was working for newScale, now part of Cisco, where I was the found
 I joined Payvment, Inc., a small startup that is now part of Intuit, where we developed the most important f-commerce platform (commerce through Facebook).  As their architect I did setup the analytics and recommendations engine.  With this platform you could setup a store within a Facebook page, promote your products and as a user you could get the recommended products related to prior behaviors.
 
 I currently work at Oracle (Responsys Product) where I am a Senior Software Architect in the applications team.  We are a SaaS company with the leading product for e-mail marketing for enterprises. Among others I have:
+
+- First
+- Second
+
 <ul>
   <li>I architected and, with a team of three engineers, delivered the Interact Content Repository (ICR) which is a server side system to manage and store content for campaigns in a multi-tenant fashion behind a Jersey/REST subsystem.</li>
   <li>I was in charge of the architecture and design of the Programs platform. This platform is a workflow engine that drives a set of interactions for a given individual, through which you can perform follow up conversations via email, SMS, or push to the user devices.</li>
