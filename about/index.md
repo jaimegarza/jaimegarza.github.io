@@ -18,19 +18,15 @@ I joined Payvment, Inc., a small startup that is now part of Intuit, where we de
 
 I currently work at Oracle (Responsys Product) where I am a Senior Software Architect in the applications team.  We are a SaaS company with the leading product for e-mail marketing for enterprises. Among others I have:
 
-- First
-- Second
+- I architected and, with a team of three engineers, delivered the Interact Content Repository (ICR) which is a server side system to manage and store content for campaigns in a multi-tenant fashion behind a Jersey/REST subsystem.
+- I was in charge of the architecture and design of the Programs platform. This platform is a workflow engine that drives a set of interactions for a given individual, through which you can perform follow up conversations via email, SMS, or push to the user devices.
+- Architected the AppCloud subsystem, as a way to integrate applications into the Responsys product.
+- I also architected the Audience engine, a platform for filtering individual through a visual workflow interface.
+- I architect the multi-channel initiative. Through this, we can target individuals in their mobile devices, or multiple addresses, without duplication.
+- I architected and implemented the Responsys Personalization Language, or RPL. This is the language used to embed in personalization templates for email, SMS and Push. It is a derivative of freemarker, with significant additions to the language itself.
+- As an architect of the Applications team I manage the architecture for multiple UI products, including the Email Message Designer, Campaign Workbook, Content Library, and others.
+- Currently leading the Jarvis project, the next generation marketing application
 
-<ul>
-  <li>I architected and, with a team of three engineers, delivered the Interact Content Repository (ICR) which is a server side system to manage and store content for campaigns in a multi-tenant fashion behind a Jersey/REST subsystem.</li>
-  <li>I was in charge of the architecture and design of the Programs platform. This platform is a workflow engine that drives a set of interactions for a given individual, through which you can perform follow up conversations via email, SMS, or push to the user devices.</li>
-  <li>Architected the AppCloud subsystem, as a way to integrate applications into the Responsys product.</li>
-  <li>I also architected the Audience engine, a platform for filtering individual through a visual workflow interface.</li>
-  <li>I architect the multi-channel initiative. Through this, we can target individuals in their mobile devices, or multiple addresses, without duplication.</li>
-  <li>I architected and implemented the Responsys Personalization Language, or RPL. This is the language used to embed in personalization templates for email, SMS and Push. It is a derivative of freemarker, with significant additions to the language itself.</li>
-  <li>As an architect of the Applications team I manage the architecture for multiple UI products, including the Email Message Designer, Campaign Workbook, Content Library, and others.</li>
-  <li>Currently leading the Jarvis project, the next generation marketing application</li>
-</ul>
 
 
 <img style="float: right; padding: 0px 0 0 10px;" src="{{ site.baseurl }}/about/IMG_0023-Version-2-300x225.jpg" alt="Jaime and Roxxanne" width="216" height="162" />I remarried in 2010 to my beautiful wife Roxanne. We currently live in the East Bay in the San Francisco Bay Area, in California. She works in Richmond for the <a href="http://healthyrichmond.net/">Healthy Richmond initiative of The California Endowement</a>. You can see an article for <a href="http://richmondpulse.org/qa-the-campaign-to-get-richmond-covered/">one of the initiatives in the Richmond Pulse</a>, although this is just a part of all she does. I am very proud of her. As for my children, they are all adults now, trying to live the life that I envisioned for them when I moved to this country. I have seven beautiful grandchildren.
