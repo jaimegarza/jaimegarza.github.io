@@ -2,7 +2,7 @@
 layout: page
 ---
 
-{::options parse\_block\_html="true" /}
+{::options parse_block_html="true" /}
 <div class="syntax">
 {% include syntax-header.html %}
 {% include syntax-navigation.html %}
