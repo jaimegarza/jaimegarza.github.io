@@ -312,9 +312,9 @@ var getResult = function() {
 }
 ```
 
+##### Output html
 </div>
 
-##### Output html
 <div markdown="0">
 
 <div class="heading">javascript-test.sy</div>
