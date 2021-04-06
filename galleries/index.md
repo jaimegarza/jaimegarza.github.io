@@ -22,8 +22,8 @@ layout: page
   <li>
     <a href="https://www.icloud.com/sharedalbum/#B11G4TcsmGjQw37" class="thumbnail">
       <img src="{{ site.baseurl }}/galleries/hawaii.jpg">
-      Trips to Hawaii - Honolulu, Maui<br/>
-      2008, 2012
+      Trips to Hawaii - Honolulu, Maui (twice)<br/>
+      2008, 2012, 2018
     </a>
   </li>
   <li>
