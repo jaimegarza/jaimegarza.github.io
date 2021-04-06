@@ -6,7 +6,7 @@ layout: page
 {% include syntax-header.html %}
 {% include syntax-navigation.html %}
 
-<div class="syntax-matter">
+<div class="syntax-matter" markdown="1">
 
 <style type="text/css">
   .left {
@@ -311,6 +311,8 @@ var getResult = function() {
     return calc.getResult().number;
 }
 ```
+
+</div>
 
 ##### Output html
 <div markdown="0">
@@ -2484,5 +2486,4 @@ Conflict with / resolved by Reduce
 
 </div>
 
-</div>
 </div>
